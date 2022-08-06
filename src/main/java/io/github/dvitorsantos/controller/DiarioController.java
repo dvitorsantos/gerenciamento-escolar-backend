@@ -7,12 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.List;
 
 @RestController
-@Table(name = "diario")
 public class DiarioController {
 
     @Autowired
