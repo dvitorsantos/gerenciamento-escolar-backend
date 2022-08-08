@@ -1,11 +1,9 @@
 package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.entity.Grade;
-import io.github.dvitorsantos.repository.GradeRepository;
+import io.github.dvitorsantos.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,36 +11,30 @@ import java.util.List;
 @RestController
 public class GradeController {
     @Autowired
-    private GradeRepository gradeRepository;
+    private GradeService gradeService;
 
     @GetMapping("/grades")
     public List<Grade> getGrades() {
-        return gradeRepository.findAll();
+        return gradeService.findAll();
     }
 
     @GetMapping("/grades/{id}")
     public Grade getGrade(@PathVariable(value = "id") Long id) {
-        return gradeRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "grade not found"));
+        return gradeService.findById(id);
     }
 
     @PostMapping("/grades")
     public Grade createGrade(@RequestBody Grade grade) {
-        return gradeRepository.save(grade);
+        return gradeService.save(grade);
     }
 
     @DeleteMapping("/grades/{id}")
     public void deleteGrade(@PathVariable(value = "id") Long id) {
-        gradeRepository.deleteById(id);
+        gradeService.deleteById(id);
     }
 
     @PutMapping("/grades/{id}")
     public Grade updateGrade(@PathVariable(value = "id") Long id, @RequestBody Grade grade) {
-        Grade gradeExistente = gradeRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "grade not found"));
-        gradeExistente.setDescricao(grade.getDescricao());
-        return gradeRepository.save(gradeExistente);
+        return gradeService.update(id, grade);
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 @Table(name="turma")
 public class Turma  {
-
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
@@ -28,7 +28,6 @@ public class Turma  {
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }

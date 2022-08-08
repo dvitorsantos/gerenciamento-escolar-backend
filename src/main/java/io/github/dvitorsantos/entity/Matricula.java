@@ -15,7 +15,7 @@ public class Matricula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonIgnore
+
     @ManyToOne()
     @JoinColumn(name = "id_aluno")
     private Aluno aluno;

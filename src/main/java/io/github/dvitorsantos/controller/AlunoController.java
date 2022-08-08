@@ -2,22 +2,15 @@ package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import io.github.dvitorsantos.entity.Aluno;
-import io.github.dvitorsantos.repository.AlunoRepository;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
-@Transactional
 public class AlunoController {
-    @Autowired
-    private AlunoRepository alunoRepository;
 
+    @Autowired
     private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {
@@ -27,7 +20,7 @@ public class AlunoController {
     @GetMapping("/alunos")
     @ResponseBody
     public List<Aluno> getAlunos() {
-        return alunoRepository.findAll();
+        return alunoService.findAll();
     }
 
     @GetMapping("/alunos/{id}")
@@ -38,28 +31,23 @@ public class AlunoController {
 
     @PostMapping("/alunos")
     public Aluno createAluno(@RequestBody Aluno aluno) {
-        return alunoRepository.save(aluno);
+        return alunoService.save(aluno);
     }
 
     @DeleteMapping("/alunos/{id}")
     public void deleteAluno(@PathVariable(value = "id") Long id) {
-        alunoRepository.deleteById(id);
+        alunoService.deleteById(id);
     }
 
     @PutMapping("/alunos/{id}")
     public Aluno updateAluno(@PathVariable(value = "id") Long id, @RequestBody Aluno aluno) {
-        Aluno alunoExistente = alunoRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "aluno not found"));
-        alunoExistente.setNome(aluno.getNome());
-        return alunoRepository.save(alunoExistente);
+        return alunoService.update(id, aluno);
     }
-
 
     @GetMapping("/alunos/{id}/matriculas")
     @ResponseBody
     public Aluno getAlunoFetchMatriculas(@PathVariable(value = "id") Long id) {
-        return alunoRepository
+        return alunoService
                 .findByIdFetchMatriculas(id);
     }
 }

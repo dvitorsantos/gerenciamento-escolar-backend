@@ -12,7 +12,6 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-
     @OneToMany(mappedBy = "aluno")
     private Set<Matricula> matriculas;
 

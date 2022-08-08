@@ -1,11 +1,9 @@
 package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.entity.Diario;
-import io.github.dvitorsantos.repository.DiarioRepository;
+import io.github.dvitorsantos.service.DiarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,36 +11,34 @@ import java.util.List;
 public class DiarioController {
 
     @Autowired
-    private DiarioRepository diarioRepository;
+    private final DiarioService diarioService;
+
+    public DiarioController(DiarioService diarioService) {
+        this.diarioService = diarioService;
+    }
 
     @GetMapping("/diarios")
     public List<Diario> getDiarios() {
-        return diarioRepository.findAll();
+        return diarioService.findAll();
     }
 
     @GetMapping("/diarios/{id}")
     public Diario getDiario(@PathVariable(value = "id") Long id) {
-        return diarioRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "diario not found"));
+        return diarioService.findById(id);
     }
 
     @PostMapping("/diarios")
     public Diario createDiario(@RequestBody Diario diario) {
-        return diarioRepository.save(diario);
+        return diarioService.save(diario);
     }
 
     @DeleteMapping("/diarios/{id}")
     public void deleteDiario(@PathVariable(value = "id") Long id) {
-        diarioRepository.deleteById(id);
+        diarioService.deleteById(id);
     }
 
     @PutMapping("/diarios/{id}")
     public Diario updateDiario(@PathVariable(value = "id") Long id, @RequestBody Diario diario) {
-        Diario diarioExistente = diarioRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "diario not found"));
-        diarioExistente.setDescricao(diario.getDescricao());
-        return diarioRepository.save(diarioExistente);
+        return diarioService.update(id, diario);
     }
 }
