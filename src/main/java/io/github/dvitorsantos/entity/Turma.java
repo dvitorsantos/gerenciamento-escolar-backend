@@ -24,6 +24,22 @@ public class Turma  {
             inverseJoinColumns = @JoinColumn(name = "id_aluno"))
     List<Aluno> alunos;
 
+    @Deprecated
+    public Turma() {
+    }
+
+    public Turma(Long id_turma) {
+        this.id = id_turma;
+    }
+
+    public Turma(Long id, String descricao, List<Diario> diarios, List<Matricula> matriculas, List<Aluno> alunos) {
+        this.id = id;
+        this.descricao = descricao;
+        this.diarios = diarios;
+        this.matriculas = matriculas;
+        this.alunos = alunos;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

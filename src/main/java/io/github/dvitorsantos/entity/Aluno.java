@@ -15,6 +15,20 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno")
     private Set<Matricula> matriculas;
 
+    @Deprecated
+    public Aluno() {
+    }
+
+    public Aluno(Long id) {
+        this.id = id;
+    }
+
+    public Aluno(Long id, String nome, Set<Matricula> matriculas) {
+        this.id = id;
+        this.nome = nome;
+        this.matriculas = matriculas;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
