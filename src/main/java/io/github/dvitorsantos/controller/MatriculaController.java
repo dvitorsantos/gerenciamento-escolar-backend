@@ -23,12 +23,12 @@ public class MatriculaController {
     @Autowired
     TurmaRepository turmaRepository;
 
-    @RequestMapping("/matriculas")
+    @GetMapping("/matriculas")
     public List<Matricula> getMatriculas() {
         return matriculaRepository.findAll();
     }
 
-    @RequestMapping("/matriculas/{id}")
+    @GetMapping("/matriculas/{id}")
     public Matricula getMatricula(@PathVariable(value = "id") Long id) {
         return matriculaRepository
                 .findById(id)

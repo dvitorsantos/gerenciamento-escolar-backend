@@ -14,6 +14,10 @@ public class Diario {
     @JoinColumn(name = "id_turma")
     private Turma turma;
 
+    @ManyToOne
+    @JoinColumn(name = "id_disciplina")
+    private Disciplina disciplina;
+
     public Turma getTurma() {
         return turma;
     }
@@ -36,5 +40,13 @@ public class Diario {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 }

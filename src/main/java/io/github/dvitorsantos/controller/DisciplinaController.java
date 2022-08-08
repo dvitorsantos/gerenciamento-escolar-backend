@@ -14,7 +14,7 @@ import java.util.List;
 public class DisciplinaController {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
-    
+
     @GetMapping("/disciplinas")
     public List<Disciplina> getDisciplinas() {
         return disciplinaRepository.findAll();

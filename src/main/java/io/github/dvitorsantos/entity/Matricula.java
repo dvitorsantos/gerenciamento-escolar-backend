@@ -1,5 +1,7 @@
 package io.github.dvitorsantos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,16 +12,19 @@ import javax.persistence.*;
 })
 public class Matricula {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne()
     @JoinColumn(name = "id_aluno")
     private Aluno aluno;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "id_turma")
     private Turma turma;
+
+    private String matricula;
 
     @Deprecated
     public Matricula() {
@@ -52,5 +57,13 @@ public class Matricula {
 
     public void setTurma(Turma turma) {
         this.turma = turma;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 }
