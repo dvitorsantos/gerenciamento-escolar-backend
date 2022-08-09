@@ -22,6 +22,10 @@ public class Aluno {
     public Aluno(Long id) {
         this.id = id;
     }
+    
+    public Aluno(String nome) {
+        this.nome = nome;
+    }
 
     public Aluno(Long id, String nome, Set<Matricula> matriculas) {
         this.id = id;

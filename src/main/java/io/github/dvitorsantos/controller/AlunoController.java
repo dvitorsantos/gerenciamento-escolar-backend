@@ -1,10 +1,15 @@
 package io.github.dvitorsantos.controller;
 
+import io.github.dvitorsantos.dto.aluno.AlunoDto;
+import io.github.dvitorsantos.dto.aluno.AlunoFetchMatriculaResponseDto;
+import io.github.dvitorsantos.dto.aluno.AlunoResponseDto;
 import io.github.dvitorsantos.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.dvitorsantos.entity.Aluno;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,19 +24,28 @@ public class AlunoController {
 
     @GetMapping("/alunos")
     @ResponseBody
-    public List<Aluno> getAlunos() {
-        return alunoService.findAll();
+    public List<AlunoResponseDto> getAlunos() {
+        List<Aluno> alunos = alunoService.findAll();
+        ArrayList<AlunoResponseDto> alunoResponseDtos = new ArrayList<>();
+
+        for (Aluno aluno : alunos) {
+            alunoResponseDtos.add(AlunoResponseDto.fromEntity(aluno));
+        }
+
+        return alunoResponseDtos;
     }
 
     @GetMapping("/alunos/{id}")
     @ResponseBody
-    public Aluno getAluno(@PathVariable(value = "id") Long id) {
-        return alunoService.findById(id);
+    public AlunoResponseDto getAluno(@PathVariable(value = "id") Long id) {
+        Aluno aluno = alunoService.findById(id);
+        return AlunoResponseDto.fromEntity(aluno);
     }
 
     @PostMapping("/alunos")
-    public Aluno createAluno(@RequestBody Aluno aluno) {
-        return alunoService.save(aluno);
+    public AlunoResponseDto createAluno(@RequestBody AlunoDto alunoDto) {
+        Aluno aluno = alunoService.save(alunoDto.toEntity());
+        return AlunoResponseDto.fromEntity(aluno);
     }
 
     @DeleteMapping("/alunos/{id}")
@@ -40,15 +54,16 @@ public class AlunoController {
     }
 
     @PutMapping("/alunos/{id}")
-    public Aluno updateAluno(@PathVariable(value = "id") Long id, @RequestBody Aluno aluno) {
-        return alunoService.update(id, aluno);
+    public AlunoResponseDto updateAluno(@PathVariable(value = "id") Long id, @RequestBody Aluno updatedAluno) {
+        Aluno aluno = alunoService.update(id, updatedAluno);
+        return AlunoResponseDto.fromEntity(aluno);
     }
 
     @GetMapping("/alunos/{id}/matriculas")
     @ResponseBody
-    public Aluno getAlunoFetchMatriculas(@PathVariable(value = "id") Long id) {
-        return alunoService
-                .findByIdFetchMatriculas(id);
+    public AlunoFetchMatriculaResponseDto getAlunoFetchMatriculas(@PathVariable(value = "id") Long id) {
+        Aluno aluno = alunoService.findByIdFetchMatriculas(id);
+        return AlunoFetchMatriculaResponseDto.fromEntity(aluno);
     }
 }
 
