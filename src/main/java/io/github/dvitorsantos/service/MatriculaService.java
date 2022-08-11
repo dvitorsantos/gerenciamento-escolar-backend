@@ -2,9 +2,11 @@ package io.github.dvitorsantos.service;
 
 import io.github.dvitorsantos.entity.Aluno;
 import io.github.dvitorsantos.entity.Matricula;
+import io.github.dvitorsantos.entity.Periodo;
 import io.github.dvitorsantos.entity.Turma;
 import io.github.dvitorsantos.repository.AlunoRepository;
 import io.github.dvitorsantos.repository.MatriculaRepository;
+import io.github.dvitorsantos.repository.PeriodoRepository;
 import io.github.dvitorsantos.repository.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +27,14 @@ public class MatriculaService {
     @Autowired
     private final TurmaRepository turmaRepository;
 
-    public MatriculaService(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, TurmaRepository turmaRepository) {
+    @Autowired
+    private final PeriodoRepository periodoRepository;
+
+    public MatriculaService(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, TurmaRepository turmaRepository, PeriodoRepository periodoRepository) {
         this.matriculaRepository = matriculaRepository;
         this.alunoRepository = alunoRepository;
         this.turmaRepository = turmaRepository;
+        this.periodoRepository = periodoRepository;
     }
 
     public List<Matricula> findAll() {
@@ -50,7 +56,11 @@ public class MatriculaService {
                 .findById(matricula.getTurma().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "turma not found"));
 
-        return matriculaRepository.save(new Matricula(aluno, turma));
+        Periodo periodo = periodoRepository
+                .findById(matricula.getPeriodo().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "periodo not found"));
+
+        return matriculaRepository.save(new Matricula(aluno, turma, periodo));
     }
 
     public Matricula save(Matricula matricula) {

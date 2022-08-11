@@ -11,6 +11,14 @@ public class Periodo {
     @Column(nullable = false, unique = true)
     private String descricao;
 
+    @Deprecated
+    public Periodo() {
+    }
+
+    public Periodo(Long id_periodo) {
+        this.id = id_periodo;
+    }
+
     public Long getId() {
         return id;
     }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "matricula", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-                "id_aluno", "id_turma"
+                "id_aluno", "id_turma", "id_periodo"
         })
 })
 public class Matricula {
@@ -26,13 +26,20 @@ public class Matricula {
 
     private String matricula;
 
+    @ManyToOne
+    @JoinColumn(name = "id_periodo")
+    private Periodo periodo;
+
+    private String situacao;
+
     @Deprecated
     public Matricula() {
     }
 
-    public Matricula(Aluno aluno, Turma turma) {
+    public Matricula(Aluno aluno, Turma turma, Periodo periodo) {
         this.aluno = aluno;
         this.turma = turma;
+        this.periodo = periodo;
     }
 
     public Long getId() {
@@ -65,5 +72,13 @@ public class Matricula {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
 }
