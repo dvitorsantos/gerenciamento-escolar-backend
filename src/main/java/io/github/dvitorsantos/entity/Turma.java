@@ -57,4 +57,7 @@ public class Turma  {
     }
 
 
+    public List<Diario> getDiarios() {
+        return this.diarios;
+    }
 }

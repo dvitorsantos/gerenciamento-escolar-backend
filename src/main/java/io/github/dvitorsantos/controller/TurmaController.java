@@ -1,10 +1,12 @@
 package io.github.dvitorsantos.controller;
 
+import io.github.dvitorsantos.dto.turma.TurmaResponseDto;
 import io.github.dvitorsantos.entity.Turma;
 import io.github.dvitorsantos.service.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,13 +19,21 @@ public class TurmaController {
     }
 
     @GetMapping("/turmas")
-    public List<Turma> getTurmas() {
-        return turmaService.findAll();
+    public List<TurmaResponseDto> getTurmas() {
+        List<Turma> turmas = turmaService.findAll();
+        ArrayList<TurmaResponseDto> turmaResponseDtos = new ArrayList<>();
+
+        for (Turma turma : turmas) {
+            turmaResponseDtos.add(TurmaResponseDto.fromEntity(turma));
+        }
+
+        return turmaResponseDtos;
     }
 
     @GetMapping("/turmas/{id}")
-    public Turma getTurma(@PathVariable(value = "id") Long id) {
-        return turmaService.findById(id);
+    public TurmaResponseDto getTurma(@PathVariable(value = "id") Long id) {
+        Turma turma = turmaService.findById(id);
+        return TurmaResponseDto.fromEntity(turma);
     }
 
     @PostMapping("/turmas")

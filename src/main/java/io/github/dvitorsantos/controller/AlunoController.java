@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.dvitorsantos.entity.Aluno;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
