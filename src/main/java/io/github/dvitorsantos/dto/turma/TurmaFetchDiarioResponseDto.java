@@ -4,13 +4,14 @@ import io.github.dvitorsantos.entity.Diario;
 import io.github.dvitorsantos.entity.Turma;
 
 import java.util.List;
+import java.util.Set;
 
 public class TurmaFetchDiarioResponseDto {
     private Long id;
     private String descricao;
-    private List<Diario> diarios;
+    private Set<Diario> diarios;
 
-    public TurmaFetchDiarioResponseDto(Long id, String descricao, List<Diario> diarios) {
+    public TurmaFetchDiarioResponseDto(Long id, String descricao, Set<Diario> diarios) {
         this.id = id;
         this.descricao = descricao;
         this.diarios = diarios;
@@ -32,11 +33,11 @@ public class TurmaFetchDiarioResponseDto {
         this.descricao = descricao;
     }
 
-    public List<Diario> getDiarios() {
+    public Set<Diario> getDiarios() {
         return diarios;
     }
 
-    public void setDiarios(List<Diario> diarios) {
+    public void setDiarios(Set<Diario> diarios) {
         this.diarios = diarios;
     }
 

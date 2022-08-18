@@ -1,5 +1,6 @@
 package io.github.dvitorsantos.controller;
 
+import io.github.dvitorsantos.dto.turma.TurmaFetchMatriculaResponseDto;
 import io.github.dvitorsantos.dto.turma.TurmaResponseDto;
 import io.github.dvitorsantos.entity.Turma;
 import io.github.dvitorsantos.service.TurmaService;
@@ -34,6 +35,12 @@ public class TurmaController {
     public TurmaResponseDto getTurma(@PathVariable(value = "id") Long id) {
         Turma turma = turmaService.findById(id);
         return TurmaResponseDto.fromEntity(turma);
+    }
+
+    @GetMapping("/turmas/{id}/matriculas")
+    public TurmaFetchMatriculaResponseDto getTurmaFetchMatriculas(@PathVariable(value = "id") Long id) {
+        Turma turma = turmaService.findById(id);
+        return TurmaFetchMatriculaResponseDto.fromEntity(turma);
     }
 
     @PostMapping("/turmas")

@@ -40,6 +40,7 @@ public class Matricula {
         this.aluno = aluno;
         this.turma = turma;
         this.periodo = periodo;
+        this.matricula = this.geraMatricula(aluno, turma, periodo);
     }
 
     public Long getId() {
@@ -80,5 +81,9 @@ public class Matricula {
 
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
+    }
+
+    public String geraMatricula(Aluno aluno, Turma turma, Periodo periodo) {
+        return periodo.getDescricao() + turma.getId() + aluno.getId();
     }
 }
