@@ -1,6 +1,7 @@
 package io.github.dvitorsantos.service;
 
 import io.github.dvitorsantos.entity.Usuario;
+import io.github.dvitorsantos.exception.InvalidPasswordException;
 import io.github.dvitorsantos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -18,14 +19,24 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    public UserDetails authenticate(Usuario usuario) {
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+        boolean senhasBatem = passwordEncoder.matches(usuario.getSenha(), user.getPassword());
+
+        if(senhasBatem){
+            return user;
+        }
+
+        throw new InvalidPasswordException();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        System.out.println(usuario.toString(), passwordEncoder.);
-
-        String[] roles = usuario.isAdmin() ? new String[]{"ADMIN", "USER"} : new String[]{"USER"};
+        String[] roles = usuario.getAdmin() ?
+                new String[]{"ADMIN", "USER"} : new String[]{"USER"};
 
         return User
                 .builder()
