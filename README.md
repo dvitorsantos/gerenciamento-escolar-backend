@@ -1,2 +1,2 @@
 # GerenciamentoEscolar
-Sistema de  Gerenciamento Escolar
+API de gerenciamento escolar feito em spring boot
