@@ -2,6 +2,7 @@ package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.dto.usuario.CredentialsDto;
 import io.github.dvitorsantos.dto.usuario.TokenDto;
+import io.github.dvitorsantos.dto.usuario.UsuarioPlainDto;
 import io.github.dvitorsantos.entity.Usuario;
 import io.github.dvitorsantos.exception.InvalidPasswordException;
 import io.github.dvitorsantos.security.jwt.JwtService;
@@ -36,8 +37,17 @@ public class UsuarioController {
 
             UserDetails usuarioAutenticado = usuarioService.authenticate(usuario);
             String token = jwtService.generateToken(usuario);
-            return new TokenDto(usuario.getLogin(), token);
+            return new TokenDto(UsuarioPlainDto.fromEntity(usuario), token);
         } catch (UsernameNotFoundException | InvalidPasswordException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @GetMapping("/{token}")
+    public UsuarioPlainDto getUsuarioByToken(@PathVariable String token) {
+        try {
+            return UsuarioPlainDto.fromEntity(jwtService.getUsuario(token));
+        } catch (UsernameNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }

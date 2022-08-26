@@ -50,4 +50,9 @@ public class UsuarioService implements UserDetailsService {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario findByLogin(String login) {
+        return usuarioRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    }
 }

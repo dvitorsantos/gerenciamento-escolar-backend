@@ -12,7 +12,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashMap;
 
 @Service
 public class JwtService {
@@ -53,5 +52,11 @@ public class JwtService {
 
     public String getUser(String token) {
         return (String) this.getClaims(token).getSubject();
+    }
+
+    public Usuario getUsuario(String token) {
+        return Usuario.builder()
+                .login(this.getUser(token))
+                .build();
     }
 }
