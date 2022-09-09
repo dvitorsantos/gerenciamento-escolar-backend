@@ -1,5 +1,6 @@
 package io.github.dvitorsantos.service;
 
+import io.github.dvitorsantos.dto.usuario.UsuarioCreateDto;
 import io.github.dvitorsantos.entity.Usuario;
 import io.github.dvitorsantos.exception.InvalidPasswordException;
 import io.github.dvitorsantos.repository.UsuarioRepository;
@@ -47,7 +48,9 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario save(Usuario usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        usuario.setLogin(usuario.getEmail());
+        usuario.setSenha(passwordEncoder.encode(usuario.getCpf()));
+        usuario.setAdmin(false);
         return usuarioRepository.save(usuario);
     }
 

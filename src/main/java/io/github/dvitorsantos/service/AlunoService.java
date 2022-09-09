@@ -40,7 +40,6 @@ public class AlunoService {
         Aluno alunoExistente = alunoRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "aluno not found"));
-        alunoExistente.setNome(aluno.getNome());
         return alunoRepository.save(alunoExistente);
     }
 

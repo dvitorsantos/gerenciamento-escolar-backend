@@ -2,6 +2,7 @@ package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.dto.usuario.CredentialsDto;
 import io.github.dvitorsantos.dto.usuario.TokenDto;
+import io.github.dvitorsantos.dto.usuario.UsuarioCreateDto;
 import io.github.dvitorsantos.dto.usuario.UsuarioPlainDto;
 import io.github.dvitorsantos.entity.Usuario;
 import io.github.dvitorsantos.exception.InvalidPasswordException;
@@ -23,8 +24,8 @@ public class UsuarioController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.save(usuario);
+    public Usuario createUsuario(@RequestBody UsuarioCreateDto usuario) {
+        return usuarioService.save(usuario.toEntity());
     }
 
     @PostMapping("/auth")

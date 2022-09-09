@@ -11,25 +11,23 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
     @OneToMany(mappedBy = "aluno")
     private Set<Matricula> matriculas;
 
-    @Deprecated
     public Aluno() {
     }
 
     public Aluno(Long id) {
         this.id = id;
     }
-    
-    public Aluno(String nome) {
-        this.nome = nome;
-    }
 
-    public Aluno(Long id, String nome, Set<Matricula> matriculas) {
+    public Aluno(Long id, Set<Matricula> matriculas) {
         this.id = id;
-        this.nome = nome;
         this.matriculas = matriculas;
     }
 
@@ -41,12 +39,12 @@ public class Aluno {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Set<Matricula> getMatriculas() {

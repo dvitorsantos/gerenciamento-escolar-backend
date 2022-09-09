@@ -1,9 +1,13 @@
 package io.github.dvitorsantos.controller;
 
+import io.github.dvitorsantos.dto.aluno.AlunoCreateDto;
 import io.github.dvitorsantos.dto.aluno.AlunoDto;
 import io.github.dvitorsantos.dto.aluno.AlunoFetchMatriculaResponseDto;
 import io.github.dvitorsantos.dto.aluno.AlunoResponseDto;
+import io.github.dvitorsantos.dto.usuario.UsuarioCreateDto;
+import io.github.dvitorsantos.entity.Usuario;
 import io.github.dvitorsantos.service.AlunoService;
+import io.github.dvitorsantos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.dvitorsantos.entity.Aluno;
@@ -17,8 +21,12 @@ public class AlunoController {
     @Autowired
     private final AlunoService alunoService;
 
-    public AlunoController(AlunoService alunoService) {
+    @Autowired
+    private final UsuarioService usuarioService;
+
+    public AlunoController(AlunoService alunoService, UsuarioService usuarioService) {
         this.alunoService = alunoService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/alunos")
@@ -42,8 +50,20 @@ public class AlunoController {
     }
 
     @PostMapping("/alunos")
-    public AlunoResponseDto createAluno(@RequestBody AlunoDto alunoDto) {
-        Aluno aluno = alunoService.save(alunoDto.toEntity());
+    public AlunoResponseDto createAluno(@RequestBody AlunoCreateDto alunoCreateDto) {
+        UsuarioCreateDto usuarioDto = alunoCreateDto.toUsuarioCreateDto();
+
+        Aluno aluno = alunoCreateDto.toEntity();
+        Usuario usuario = usuarioDto.toEntity();
+
+        try {
+            Usuario usuarioCreated = usuarioService.save(usuario);
+            aluno.setUsuario(usuarioCreated);
+            alunoService.save(aluno);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         return AlunoResponseDto.fromEntity(aluno);
     }
 

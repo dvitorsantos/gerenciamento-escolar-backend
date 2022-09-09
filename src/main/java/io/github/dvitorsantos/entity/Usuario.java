@@ -20,11 +20,48 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-
     private String login;
 
     private String senha;
 
     private Boolean admin;
+
+    private String nome;
+
+    private String sobrenome;
+
+    private String email;
+
+    private String cpf;
+
+    private String telefone;
+
+    private String cor;
+
+    private String sexo;
+
+    private String pais;
+
+    private String estado;
+
+    private String cidade;
+
+    private String cep;
+
+    public Usuario(String nome, String sobrenome, String email, String cpf, String telefone, String cor, String sexo, String pais, String estado, String cidade, String cep) {
+        this.login = login;
+        this.senha = senha;
+        this.admin = admin;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.cor = cor;
+        this.sexo = sexo;
+        this.pais = pais;
+        this.estado = estado;
+        this.cidade = cidade;
+        this.cep = cep;
+    }
 }
