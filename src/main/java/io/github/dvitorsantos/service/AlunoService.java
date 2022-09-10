@@ -47,4 +47,9 @@ public class AlunoService {
         return alunoRepository
                 .findByIdFetchMatriculas(id);
     }
+
+    public List<Aluno> findAllFetchUsuario() {
+        return alunoRepository
+                .findAllFetchUsuario();
+    }
 }

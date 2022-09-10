@@ -1,7 +1,6 @@
 package io.github.dvitorsantos.controller;
 
 import io.github.dvitorsantos.dto.aluno.AlunoCreateDto;
-import io.github.dvitorsantos.dto.aluno.AlunoDto;
 import io.github.dvitorsantos.dto.aluno.AlunoFetchMatriculaResponseDto;
 import io.github.dvitorsantos.dto.aluno.AlunoResponseDto;
 import io.github.dvitorsantos.dto.usuario.UsuarioCreateDto;
@@ -32,7 +31,7 @@ public class AlunoController {
     @GetMapping("/alunos")
     @ResponseBody
     public List<AlunoResponseDto> getAlunos() {
-        List<Aluno> alunos = alunoService.findAll();
+        List<Aluno> alunos = alunoService.findAllFetchUsuario();
         ArrayList<AlunoResponseDto> alunoResponseDtos = new ArrayList<>();
 
         for (Aluno aluno : alunos) {
@@ -55,6 +54,10 @@ public class AlunoController {
 
         Aluno aluno = alunoCreateDto.toEntity();
         Usuario usuario = usuarioDto.toEntity();
+
+        usuario.setLogin(usuario.getEmail());
+        usuario.setSenha(usuario.getCpf());
+        usuario.setAdmin(false);
 
         try {
             Usuario usuarioCreated = usuarioService.save(usuario);
