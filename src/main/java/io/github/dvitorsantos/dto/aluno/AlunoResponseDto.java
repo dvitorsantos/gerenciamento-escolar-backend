@@ -28,7 +28,9 @@ public class AlunoResponseDto {
 
     private String cep;
 
-    public AlunoResponseDto(Long id, String nome, String sobrenome, String email, String cpf, String telefone, String cor, String sexo, String pais, String estado, String cidade, String cep) {
+    private String rua;
+
+    public AlunoResponseDto(Long id, String nome, String sobrenome, String email, String cpf, String telefone, String cor, String sexo, String pais, String estado, String cidade, String cep, String rua) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -41,6 +43,7 @@ public class AlunoResponseDto {
         this.estado = estado;
         this.cidade = cidade;
         this.cep = cep;
+        this.rua = rua;
     }
 
     public Long getId() {
@@ -139,8 +142,16 @@ public class AlunoResponseDto {
         this.cep = cep;
     }
 
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
     public static AlunoResponseDto fromEntity(Aluno aluno) {
         Usuario usuario = aluno.getUsuario();
-        return new AlunoResponseDto(aluno.getId(), usuario.getNome(), usuario.getSobrenome(), usuario.getEmail(), usuario.getCpf(), usuario.getTelefone(), usuario.getCor(), usuario.getSexo(), usuario.getPais(), usuario.getEstado(), usuario.getCidade(), usuario.getCep());
+        return new AlunoResponseDto(aluno.getId(), usuario.getNome(), usuario.getSobrenome(), usuario.getEmail(), usuario.getCpf(), usuario.getTelefone(), usuario.getCor(), usuario.getSexo(), usuario.getPais(), usuario.getEstado(), usuario.getCidade(), usuario.getCep(), usuario.getRua());
     }
 }

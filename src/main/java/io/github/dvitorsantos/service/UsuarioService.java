@@ -55,4 +55,32 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByLogin(login)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
+
+    public Usuario update(Long id, Usuario usuario) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        System.out.println(usuario.getNome());
+        System.out.println(usuarioExistente.getNome());
+
+        usuarioExistente.setNome(usuario.getNome());
+        usuarioExistente.setSobrenome(usuario.getSobrenome());
+        usuarioExistente.setCep(usuario.getCep());
+        usuarioExistente.setCidade(usuario.getCidade());
+        usuarioExistente.setEstado(usuario.getEstado());
+        usuarioExistente.setPais(usuario.getPais());
+        usuarioExistente.setRua(usuario.getRua());
+        usuarioExistente.setTelefone(usuario.getTelefone());
+        usuarioExistente.setCor(usuario.getCor());
+        usuarioExistente.setSexo(usuario.getSexo());
+        usuarioExistente.setCpf(usuario.getCpf());
+        usuarioExistente.setEmail(usuario.getEmail());
+
+        return usuarioRepository.save(usuarioExistente);
+    }
+
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    }
 }

@@ -31,8 +31,9 @@ public class UsuarioCreateDto {
 
     private String cep;
 
+    private String rua;
 
     public Usuario toEntity() {
-        return new Usuario(nome, sobrenome, email, cpf, telefone, cor, sexo, pais, estado, cidade, cep);
+        return new Usuario(nome, sobrenome, email, cpf, telefone, cor, sexo, pais, estado, cidade, cep, rua);
     }
 }

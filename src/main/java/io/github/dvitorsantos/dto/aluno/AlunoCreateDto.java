@@ -33,11 +33,13 @@ public class AlunoCreateDto {
 
     private String cep;
 
+    private String rua;
+
     public Aluno toEntity() {
         return new Aluno();
     }
 
     public UsuarioCreateDto toUsuarioCreateDto() {
-        return new UsuarioCreateDto(nome, sobrenome, email, cpf, telefone, cor, sexo, pais, estado, cidade, cep);
+        return new UsuarioCreateDto(nome, sobrenome, email, cpf, telefone, cor, sexo, pais, estado, cidade, cep, rua);
     }
 }

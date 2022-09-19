@@ -39,7 +39,7 @@ public class AlunoService {
     public Aluno update(Long id, Aluno aluno) {
         Aluno alunoExistente = alunoRepository
                 .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "aluno not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno não encontrado."));
         return alunoRepository.save(alunoExistente);
     }
 

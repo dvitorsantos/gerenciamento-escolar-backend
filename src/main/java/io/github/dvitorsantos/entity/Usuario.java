@@ -48,7 +48,9 @@ public class Usuario {
 
     private String cep;
 
-    public Usuario(String nome, String sobrenome, String email, String cpf, String telefone, String cor, String sexo, String pais, String estado, String cidade, String cep) {
+    private String rua;
+
+    public Usuario(String nome, String sobrenome, String email, String cpf, String telefone, String cor, String sexo, String pais, String estado, String cidade, String cep, String rua) {
         this.login = login;
         this.senha = senha;
         this.admin = admin;
@@ -63,5 +65,6 @@ public class Usuario {
         this.estado = estado;
         this.cidade = cidade;
         this.cep = cep;
+        this.rua = rua;
     }
 }

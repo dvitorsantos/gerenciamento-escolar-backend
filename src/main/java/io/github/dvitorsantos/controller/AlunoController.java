@@ -76,8 +76,16 @@ public class AlunoController {
     }
 
     @PutMapping("/alunos/{id}")
-    public AlunoResponseDto updateAluno(@PathVariable(value = "id") Long id, @RequestBody Aluno updatedAluno) {
-        Aluno aluno = alunoService.update(id, updatedAluno);
+    public AlunoResponseDto updateAluno(@PathVariable(value = "id") Long id_aluno, @RequestBody AlunoCreateDto alunoUpdateDto) {
+        Aluno aluno = alunoService.findById(id_aluno);
+        Long id_usuario = aluno.getUsuario().getId();
+
+        Aluno alunoUpdated = alunoUpdateDto.toEntity();
+        Usuario UsuarioUpdated = alunoUpdateDto.toUsuarioCreateDto().toEntity();
+
+        usuarioService.update(id_usuario, UsuarioUpdated);
+        alunoService.update(id_aluno, alunoUpdated);
+
         return AlunoResponseDto.fromEntity(aluno);
     }
 
